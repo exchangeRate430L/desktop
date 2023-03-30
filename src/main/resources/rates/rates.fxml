@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane fx:controller="com.kss22.exchange.Controller"
+<GridPane fx:controller="com.kss22.exchange.rates.Rates"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10"
           prefHeight="475.0" prefWidth="600.0"
           vgap="10"
-          stylesheets="@layout.css">
+          stylesheets="@rates.css">
 
     <Label styleClass="header" text="LBP Exchange Rate"
            textAlignment="CENTER" GridPane.columnSpan="2"
@@ -34,6 +34,6 @@
         </toggleGroup>
     </RadioButton>
     <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="0" GridPane.rowIndex="12"/>
-    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
+    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="14" onAction="#addTransaction"/>
 
 </GridPane>
