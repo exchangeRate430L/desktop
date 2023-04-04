@@ -47,7 +47,7 @@ public class Rates {
                 ((RadioButton)
                         transactionType.getSelectedToggle()).getText().equals("Sell USD")
         );
-        ExchangeService.exchangeApi().addTransaction(transaction).enqueue(new Callback<Object>() {
+        ExchangeService.exchangeApi().addTransaction(transaction, null).enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object>
                     response) {

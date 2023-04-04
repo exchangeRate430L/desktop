@@ -21,10 +21,10 @@
            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
                GridPane.columnIndex="0" GridPane.columnSpan="2"/>
-    <TextField fx:id="usdTextField" text= "Lbp" GridPane.columnIndex="0" GridPane.rowIndex="8">
+    <TextField fx:id="usdTextField" text= "Usd" GridPane.columnIndex="0" GridPane.rowIndex="8">
         <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
     </TextField>
-    <TextField fx:id="lbpTextField" text= "Usd" GridPane.columnIndex="1" GridPane.rowIndex="8">
+    <TextField fx:id="lbpTextField" text= "Lbp" GridPane.columnIndex="1" GridPane.rowIndex="8">
         <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
     </TextField>
 

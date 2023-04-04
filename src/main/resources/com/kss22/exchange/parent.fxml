@@ -25,6 +25,6 @@ out" onAction="#logoutSelected"/>
         </VBox>
     </left>
     <center>
-        <fx:include source="../../../rates/rates.fxml"/>
+        <fx:include source="rates/rates.fxml"/>
     </center>
 </BorderPane>
