@@ -78,7 +78,7 @@ public class Parent implements Initializable, OnPageCompleteListener {
         public String getResource() {
             return switch (this) {
                 case RATES -> "/com/kss22/exchange/rates/rates.fxml";
-                case TRANSACTIONS -> "/com/kss22/exchange/rates/rates.fxml";
+                case TRANSACTIONS -> "/com/kss22/exchange/transactions/transactions.fxml";
                 case LOGIN -> "/com/kss22/exchange/login/login.fxml";
                 case REGISTER -> "/com/kss22/exchange/register/register.fxml";
                 default -> null;
