@@ -25,6 +25,9 @@ out" onAction="#logoutSelected"/>
             <Button fx:id="analyticsButton" styleClass="nav-button"
                     text="Insights"
                     onAction="#analyticsSelected"/>
+            <Button fx:id="graphButton" styleClass="nav-button"
+                    text="Graph"
+                    onAction="#graphSelected"/>
         </VBox>
     </left>
     <center>

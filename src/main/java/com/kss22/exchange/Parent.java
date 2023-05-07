@@ -16,6 +16,7 @@ public class Parent implements Initializable, OnPageCompleteListener {
     public Button registerButton;
     public Button logoutButton;
     public Button analyticsButton;
+    public Button graphButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,6 +46,9 @@ public class Parent implements Initializable, OnPageCompleteListener {
     public void analyticsSelected() {
         swapContent(Section.Analytics);
     }
+    public void graphSelected() {
+        swapContent(Section.GRAPH);
+    }
 
     private void swapContent(Section section) {
         try {
@@ -73,6 +77,8 @@ public class Parent implements Initializable, OnPageCompleteListener {
         logoutButton.setVisible(authenticated);
         analyticsButton.setManaged(!authenticated);
         analyticsButton.setVisible(!authenticated);
+        graphButton.setManaged(!authenticated);
+        graphButton.setVisible(!authenticated);
     }
 
     private enum Section {
@@ -80,7 +86,8 @@ public class Parent implements Initializable, OnPageCompleteListener {
         TRANSACTIONS,
         LOGIN,
         REGISTER,
-        Analytics;
+        Analytics,
+        GRAPH;
 
         public String getResource() {
             return switch (this) {
@@ -90,6 +97,7 @@ public class Parent implements Initializable, OnPageCompleteListener {
                 case REGISTER -> "/com/kss22/exchange/register/register.fxml";
                 default -> null;
                 case Analytics -> "/com/kss22/exchange/analytics/analytics.fxml";
+                case GRAPH -> "/com/kss22/exchange/graph/graph.fxml";
             };
         }
         public boolean doesComplete() {
