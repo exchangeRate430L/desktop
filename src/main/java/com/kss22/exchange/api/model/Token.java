@@ -1,4 +1,4 @@
-package com.kss22.exchange.api.model;
+package com.kfh11.exchange.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
