@@ -1,8 +1,14 @@
 package com.kss22.exchange.api;
 
-import com.kss22.exchange.api.model.*;
+import com.kss22.exchange.api.model.ExchangeRates;
+import com.kss22.exchange.api.model.Token;
+import com.kss22.exchange.api.model.Transaction;
+import com.kss22.exchange.api.model.User;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 
 import java.util.List;
 
@@ -23,8 +29,4 @@ public interface Exchange {
     @GET("/transaction")
     Call<List<Transaction>> getTransactions(@Header("Authorization")
                                             String authorization);
-    @GET("/transaction")
-    Call<analytics> getAnalytics(@Header("Authorization") String authorization,
-                                 @Query("fromDate") String fromDate,
-                                 @Query("toDate") String toDate);
 }
