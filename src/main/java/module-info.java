@@ -16,4 +16,5 @@ module com.kss22.exchange {
     opens com.kss22.exchange.rates to javafx.fxml;
     opens com.kss22.exchange.graph to javafx.fxml;
     opens com.kss22.exchange.analytics to javafx.fxml;
+    opens com.kss22.exchange.platform to javafx.fxml;
 }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.kss22.exchange.platform.Platform"
+            stylesheets="@platform.css"
+            prefHeight="400.0" prefWidth="600.0">
+    <top>
+        <VBox styleClass="toolbar">
+            <Label styleClass="title" text="Exchange Platform"/>
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Welcome, "/>
+                <Label fx:id="usernameLabel"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <Label text="Select currencies to exchange"/>
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="From"/>
+                <ComboBox fx:id="fromCurrencyComboBox" />
+                <Button text="USD to LBP" onAction="#usdToLbpClicked" />
+                <Button text="LBP to USD" onAction="#lbpToUsdClicked" />
+            </HBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="To"/>
+                <ComboBox fx:id="toCurrencyComboBox" />
+            </HBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Amount"/>
+                <TextField fx:id="amountTextField"/>
+            </HBox>
+            <Button fx:id="exchangeButton" text="Exchange" onAction="#exchange"/>
+            <TableView fx:id="transactionTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="dateColumn" text="Date"/>
+                    <TableColumn fx:id="fromColumn" text="From"/>
+                    <TableColumn fx:id="toColumn" text="To"/>
+                    <TableColumn fx:id="amountColumn" text="Amount"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
