@@ -9,10 +9,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class analytics implements Initializable {
@@ -48,10 +52,15 @@ public class analytics implements Initializable {
                                 Authentication.getInstance().getToken(),
                         fromDate.toString(), toDate.toString())
                 .enqueue(new Callback<com.kss22.exchange.api.model.analytics>() {
+
                     @Override
                     public void onResponse(Call<com.kss22.exchange.api.model.analytics> call,
                                            Response<com.kss22.exchange.api.model.analytics> response) {
-                        tableView.getItems().setAll(response.body());
+                        // Create a list of com.kss22.exchange.api.model.analytics objects from the response body
+                        List<com.kss22.exchange.api.model.analytics> analyticsList = new ArrayList<>();
+                        analyticsList.add(response.body());
+                        // Set the items of the tableView with the created list
+                        tableView.getItems().setAll(analyticsList);
                     }
 
                     @Override

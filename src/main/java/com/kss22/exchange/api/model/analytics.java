@@ -1,5 +1,7 @@
 package com.kss22.exchange.api.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class analytics {
 
     @SerializedName("total_usd_amount")
@@ -14,3 +16,4 @@ public class analytics {
         this.totalLbpAmount = totalLbpAmount;
         this.totalTransactions = totalTransactions;
     }
+}
