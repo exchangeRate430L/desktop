@@ -1,27 +1,23 @@
 package com.kss22.exchange.graph;
 
-import com.kss22.exchange.Authentication;
 import com.kss22.exchange.api.ExchangeService;
+import com.kss22.exchange.api.model.ExchangeRates;
 import com.kss22.exchange.api.model.Transaction;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.DatePicker;
-import javafx.util.Callback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class Graph implements Initializable {
-    @FXML
-    private DatePicker fromDatePicker;
-    @FXML
-    private DatePicker toDatePicker;
     @FXML
     private LineChart<String, Number> lineChart;
     @FXML
@@ -36,25 +32,22 @@ public class Graph implements Initializable {
     }
 
     private void loadData() {
-        ExchangeService.exchangeApi().getTransactions("Bearer " +
-                        Authentication.getInstance().getToken())
-                .enqueue(new Callback<List<Transaction>>() {
-                    @Override
-                    public void onResponse(Call<List<Transaction>> call, Response<List<Transaction>> response) {
-                        if (response.isSuccessful()) {
-                            Platform.runLater(() -> {
-                                populateGraph(response.body());
-                            });
-                        } else {
-                            // TODO: Handle response error
-                        }
-                    }
+        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
+            @Override
+            public void onResponse(Call<ExchangeRates> call,
+                                   Response<ExchangeRates> response) {
+                ExchangeRates exchangeRates = response.body();
+                List<Transaction> transactionList = null;
+                transactionList = exchangeRates.chartData;
+                populateGraph(transactionList);
+            }
 
-                    @Override
-                    public void onFailure(Call<List<Transaction>> call, Throwable throwable) {
-                        // TODO: Handle failure case
-                    }
-                });
+            @Override
+            public void onFailure(Call<ExchangeRates> call, Throwable
+                    throwable) {
+            }
+        });
+
     }
 
     private void populateGraph(List<Transaction> transactions) {

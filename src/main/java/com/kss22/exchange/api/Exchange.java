@@ -21,11 +21,6 @@ public interface Exchange {
                                 @Header("Authorization") String authorization);
 
     @GET("/transaction")
-    Call<List<Transaction>> getTransactions(@Header("Authorization")
-                                            String authorization);
+    Call<List<Transaction>> getTransactions(@Header("Authorization") String authorization);
 
-    @GET("/transaction")
-    Call<analytics> getAnalytics(@Header("Authorization") String authorization,
-                                 @Query("fromDate") String fromDate,
-                                 @Query("toDate") String toDate);
 }

@@ -79,12 +79,8 @@ public class Parent implements Initializable, OnPageCompleteListener {
         registerButton.setVisible(!authenticated);
         logoutButton.setManaged(authenticated);
         logoutButton.setVisible(authenticated);
-        analyticsButton.setManaged(!authenticated);
-        analyticsButton.setVisible(!authenticated);
-        graphButton.setManaged(!authenticated);
-        graphButton.setVisible(!authenticated);
-        platformButton.setManaged(!authenticated);
-        platformButton.setVisible(!authenticated);
+        platformButton.setManaged(authenticated);
+        platformButton.setVisible(authenticated);
     }
 
     private enum Section {

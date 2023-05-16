@@ -1,7 +1,7 @@
 package com.kss22.exchange.analytics;
 
-import com.kss22.exchange.Authentication;
 import com.kss22.exchange.api.ExchangeService;
+import com.kss22.exchange.api.model.ExchangeRates;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,8 +15,6 @@ import retrofit2.Response;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class analytics implements Initializable {
@@ -48,25 +46,18 @@ public class analytics implements Initializable {
         if (fromDate == null || toDate == null) {
             return;
         }
-        ExchangeService.exchangeApi().getAnalytics("Bearer " +
-                                Authentication.getInstance().getToken(),
-                        fromDate.toString(), toDate.toString())
-                .enqueue(new Callback<com.kss22.exchange.api.model.analytics>() {
+        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
+            @Override
+            public void onResponse(Call<ExchangeRates> call,
+                                   Response<ExchangeRates> response) {
+                ExchangeRates exchangeRates = response.body();
+//                numTransactions = exchangeRates.numBuy;
+            }
 
-                    @Override
-                    public void onResponse(Call<com.kss22.exchange.api.model.analytics> call,
-                                           Response<com.kss22.exchange.api.model.analytics> response) {
-                        // Create a list of com.kss22.exchange.api.model.analytics objects from the response body
-                        List<com.kss22.exchange.api.model.analytics> analyticsList = new ArrayList<>();
-                        analyticsList.add(response.body());
-                        // Set the items of the tableView with the created list
-                        tableView.getItems().setAll(analyticsList);
-                    }
-
-                    @Override
-                    public void onFailure(Call<com.kss22.exchange.api.model.analytics> call,
-                                          Throwable throwable) {
-                    }
-                });
+            @Override
+            public void onFailure(Call<ExchangeRates> call, Throwable
+                    throwable) {
+            }
+        });
     }
 }
