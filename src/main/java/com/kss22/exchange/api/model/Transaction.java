@@ -8,15 +8,20 @@ public class Transaction {
     public Float lbpAmount;
     @SerializedName("usd_to_lbp")
     public Boolean usdToLbp;
+
+    @SerializedName("to_user_id")
+    public Integer toUserId;
+
     @SerializedName("id")
     public Integer id;
     @SerializedName("added_date")
     public String addedDate;
-    public Transaction(Float usdAmount, Float lbpAmount, Boolean usdToLbp)
+    public Transaction(Float usdAmount, Float lbpAmount, Boolean usdToLbp, Integer to_user_id)
     {
         this.usdAmount = usdAmount;
         this.lbpAmount = lbpAmount;
         this.usdToLbp = usdToLbp;
+        this.toUserId = to_user_id;
     }
 
     public Float getUsdAmount() {

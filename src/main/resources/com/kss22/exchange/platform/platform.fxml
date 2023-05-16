@@ -4,46 +4,45 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kss22.exchange.platform.Platform"
-            stylesheets="@platform.css"
-            prefHeight="400.0" prefWidth="600.0">
-    <top>
-        <VBox styleClass="toolbar">
-            <Label styleClass="title" text="Exchange Platform"/>
-            <HBox alignment="CENTER_LEFT">
-                <Label text="Welcome, "/>
-                <Label fx:id="usernameLabel"/>
-            </HBox>
-        </VBox>
-    </top>
-    <center>
-        <VBox spacing="10" alignment="CENTER">
-            <Label text="Select currencies to exchange"/>
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="From"/>
-                <ComboBox fx:id="fromCurrencyComboBox" />
-                <Button text="USD to LBP" onAction="#usdToLbpClicked" />
-                <Button text="LBP to USD" onAction="#lbpToUsdClicked" />
-            </HBox>
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="To"/>
-                <ComboBox fx:id="toCurrencyComboBox" />
-            </HBox>
-            <HBox spacing="10" alignment="CENTER">
-                <Label text="Amount"/>
-                <TextField fx:id="amountTextField"/>
-            </HBox>
-            <Button fx:id="exchangeButton" text="Exchange" onAction="#exchange"/>
-            <TableView fx:id="transactionTable" prefHeight="200">
-                <columns>
-                    <TableColumn fx:id="dateColumn" text="Date"/>
-                    <TableColumn fx:id="fromColumn" text="From"/>
-                    <TableColumn fx:id="toColumn" text="To"/>
-                    <TableColumn fx:id="amountColumn" text="Amount"/>
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
-</BorderPane>
+<GridPane fx:controller="com.kss22.exchange.platform.Platform"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10"
+          prefHeight="475.0" prefWidth="600.0"
+          vgap="10"
+          stylesheets="@platform.css">
+
+    <Label styleClass="header" text="Platform"
+           textAlignment="CENTER" GridPane.columnSpan="2"
+           GridPane.halignment="CENTER"
+    />
+
+    <Label styleClass="value-label" text="Buy USD Rate" GridPane.columnIndex="0"
+           GridPane.rowIndex="4"/>
+    <Label styleClass="value" fx:id="buyUsdRateLabel" text="Buy Rate"
+           GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Label styleClass="value-label" text="Sell USD Rate" GridPane.columnIndex="1"
+           GridPane.rowIndex="4"/>
+    <Label styleClass="value" fx:id="sellUsdRateLabel" text="Sell Rate"
+           GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
+               GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <TextField fx:id="usdTextField" text= "Usd" GridPane.columnIndex="0" GridPane.rowIndex="10" onMouseClicked="#set">
+        <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+    </TextField>
+    <TextField fx:id="lbpTextField" text= "Lbp" GridPane.columnIndex="1" GridPane.rowIndex="10" onMouseClicked="#set">
+        <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+    </TextField>
+
+    <TextField fx:id="toUserIdTextField" text="To User ID" GridPane.columnIndex="0" GridPane.rowIndex="12">
+        <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="12"/>
+    </TextField>
+
+    <RadioButton text="Buy USD" GridPane.columnIndex="0" GridPane.rowIndex="16">
+        <toggleGroup>
+            <ToggleGroup fx:id="transactionType"/>
+        </toggleGroup>
+    </RadioButton>
+    <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="0" GridPane.rowIndex="18"/>
+    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="20" onAction="#addTransaction"/>
+
+</GridPane>

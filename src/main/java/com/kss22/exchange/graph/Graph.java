@@ -1,8 +1,9 @@
 package com.kss22.exchange.graph;
 
+import com.kss22.exchange.Authentication;
 import com.kss22.exchange.api.ExchangeService;
-import com.kss22.exchange.api.model.ExchangeRates;
 import com.kss22.exchange.api.model.Transaction;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,38 +33,39 @@ public class Graph implements Initializable {
     }
 
     private void loadData() {
-        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
-            @Override
-            public void onResponse(Call<ExchangeRates> call,
-                                   Response<ExchangeRates> response) {
-                ExchangeRates exchangeRates = response.body();
-                List<Transaction> transactionList = null;
-                transactionList = exchangeRates.chartData;
-                populateGraph(transactionList);
-            }
-
-            @Override
-            public void onFailure(Call<ExchangeRates> call, Throwable
-                    throwable) {
-            }
-        });
+        ExchangeService.exchangeApi().getTransactions("Bearer " +
+                        Authentication.getInstance().getToken())
+                .enqueue(new Callback<List<Transaction>>() {
+                    @Override
+                    public void onResponse(Call<List<Transaction>> call,
+                                           Response<List<Transaction>> response) {
+                        List<Transaction> transactionsList = response.body();
+                        populateGraph(transactionsList);
+                    }
+                    @Override
+                    public void onFailure(Call<List<Transaction>> call,
+                                          Throwable throwable) {
+                    }
+                });
 
     }
 
     private void populateGraph(List<Transaction> transactions) {
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Exchange Rate");
-
         XYChart.Series<String, Number> dataSeries = new XYChart.Series<>();
         dataSeries.setName("Exchange Rate Fluctuation");
 
-        for (Transaction transaction : transactions) {
-            String date = transaction.getAddedDate();
-            float exchangeRate = transaction.getUsdToLbp() ? transaction.getLbpAmount() / transaction.getUsdAmount()
-                    : transaction.getUsdAmount() / transaction.getLbpAmount();
-            dataSeries.getData().add(new XYChart.Data<>(date, exchangeRate));
-        }
+        Platform.runLater(() -> {
+            for (Transaction transaction : transactions) {
+                String date = transaction.getAddedDate();
+                float exchangeRate = transaction.getLbpAmount() / transaction.getUsdAmount();
+                dataSeries.getData().add(new XYChart.Data<>(date, exchangeRate));
+            }
+            lineChart.getData().add(dataSeries);
+        });
 
-        lineChart.getData().add(dataSeries);
+
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Exchange Rate");
+
     }
 }

@@ -22,33 +22,28 @@
     <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
                GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
+    <Label styleClass="header" text="Calculator"
+           textAlignment="CENTER" GridPane.columnSpan="2"
+           GridPane.halignment="CENTER" GridPane.rowIndex="7"
+    />
+
     <Label styleClass="value-label" text="Equivalent USD" GridPane.columnIndex="0"
-           GridPane.rowIndex="7"/>
-    <Label styleClass="value" fx:id="equivalentUsdRateLabel" text="Equivalent LBP"
-           GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+           GridPane.rowIndex="8"/>
+    <Label styleClass="value" fx:id="equivalentUsdRateLabel" text="Equivalent USD"
+           GridPane.columnIndex="0" GridPane.rowIndex="9"/>
     <Label styleClass="value-label" text="Equivalent LBP" GridPane.columnIndex="1"
-           GridPane.rowIndex="7"/>
-    <Label styleClass="value" fx:id="equivalentLbpRateLabel" text="Equivalent USD"
-           GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+           GridPane.rowIndex="8"/>
+    <Label styleClass="value" fx:id="equivalentLbpRateLabel" text="Equivalent LBP"
+           GridPane.columnIndex="1" GridPane.rowIndex="9"/>
     <Button text="Calculate" GridPane.columnIndex="1" GridPane.rowIndex="16" onAction="#calculator"/>
-    <Separator orientation="HORIZONTAL" GridPane.RowIndex="9"
+    <Separator orientation="HORIZONTAL" GridPane.RowIndex="10"
                GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
-    <TextField fx:id="usdTextField" text= "Usd" GridPane.columnIndex="0" GridPane.rowIndex="10" onMouseClicked="#set">
+    <TextField fx:id="usdTextField" text= "Usd" GridPane.columnIndex="0" GridPane.rowIndex="12" onMouseClicked="#set">
         <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
     </TextField>
-    <TextField fx:id="lbpTextField" text= "Lbp" GridPane.columnIndex="1" GridPane.rowIndex="10" onMouseClicked="#set">
+    <TextField fx:id="lbpTextField" text= "Lbp" GridPane.columnIndex="1" GridPane.rowIndex="12" onMouseClicked="#set">
         <Label styleClass="value" GridPane.columnIndex="2" GridPane.rowIndex="6"/>
     </TextField>
-
-
-
-    <RadioButton text="Buy USD" GridPane.columnIndex="0" GridPane.rowIndex="12">
-        <toggleGroup>
-            <ToggleGroup fx:id="transactionType"/>
-        </toggleGroup>
-    </RadioButton>
-    <RadioButton text="Sell USD" toggleGroup="$transactionType" GridPane.columnIndex="0" GridPane.rowIndex="14"/>
-    <Button text="Add Transaction" GridPane.columnIndex="0" GridPane.rowIndex="16" onAction="#addTransaction"/>
 
 </GridPane>

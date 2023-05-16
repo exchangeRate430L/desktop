@@ -4,28 +4,35 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.kss22.exchange.analytics.analytics"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="CENTER" spacing="10">
-        <Label styleClass="title" text="Transaction Statistics"/>
-        <HBox alignment="CENTER" spacing="10">
-            <Label text="From Date"/>
-            <DatePicker fx:id="fromDatePicker"/>
-            <Label text="To Date"/>
-            <DatePicker fx:id="toDatePicker"/>
-            <Button text="Filter" onAction="#filter"/>
-        </HBox>
-        <TableView fx:id="tableView">
-            <columns>
-                <TableColumn text="Number of Transactions" fx:id="numTransactions"
-                             prefWidth="150"/>
-                <TableColumn text="Total USD Amount" fx:id="totalUsdAmount"
-                             prefWidth="150"/>
-                <TableColumn text="Total LBP Amount" fx:id="totalLbpAmount"
-                             prefWidth="150"/>
-            </columns>
-        </TableView>
-    </VBox>
-</AnchorPane>
+<GridPane fx:controller="com.kss22.exchange.analytics.analytics"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10"
+          prefHeight="475.0" prefWidth="600.0"
+          vgap="10"
+          stylesheets="@analytics.css">
+
+    <Label styleClass="header" text="Insights"
+           textAlignment="CENTER" GridPane.columnSpan="2"
+           GridPane.halignment="CENTER"
+    />
+    <Label styleClass="value-label" text="Number of Buy transactions" GridPane.columnIndex="0"
+           GridPane.rowIndex="4"/>
+    <Label styleClass="value" fx:id="numBuy" text="Buy Rate"
+           GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Label styleClass="value-label" text="Number of Sell transactions" GridPane.columnIndex="1"
+           GridPane.rowIndex="4"/>
+    <Label styleClass="value" fx:id="numSell" text="Sell Rate"
+           GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+    <Separator orientation="HORIZONTAL" GridPane.RowIndex="6"
+               GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+    <Label styleClass="value-label" text="buy USD price change" GridPane.columnIndex="0"
+           GridPane.rowIndex="7"/>
+    <Label styleClass="value" fx:id="lbpChange" text="Buy Rate"
+           GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+    <Label styleClass="value-label" text="sell USD price change" GridPane.columnIndex="1"
+           GridPane.rowIndex="7"/>
+    <Label styleClass="value" fx:id="usdChange" text="Sell Rate"
+           GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Separator orientation="HORIZONTAL" GridPane.RowIndex="9"
+               GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+</GridPane>

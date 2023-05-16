@@ -1,15 +1,10 @@
 package com.kss22.exchange.rates;
 
-import com.kss22.exchange.Authentication;
 import com.kss22.exchange.api.ExchangeService;
 import com.kss22.exchange.api.model.ExchangeRates;
-import com.kss22.exchange.api.model.Transaction;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,18 +12,38 @@ import retrofit2.Response;
 public class Rates {
     public Label buyUsdRateLabel;
     public Label sellUsdRateLabel;
-    public TextField lbpTextField;
-    public TextField usdTextField;
-    public ToggleGroup transactionType;
+
     public Label equivalentUsdRateLabel;
     public Label equivalentLbpRateLabel;
+
+    public TextField lbpTextField;
+    public TextField usdTextField;
+
+    public void initialize() {
+        fetchRates();
+    }
 
     public void set(){
         usdTextField.setText("");
         lbpTextField.setText("");
     }
-    public void initialize() {
-        fetchRates();
+
+    private void fetchRates() {
+        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
+            @Override
+            public void onResponse(Call<ExchangeRates> call,
+                                   Response<ExchangeRates> response) {
+                ExchangeRates exchangeRates = response.body();
+                Platform.runLater(() -> {
+                    buyUsdRateLabel.setText(exchangeRates.lbpToUsd.toString());
+                    sellUsdRateLabel.setText(exchangeRates.usdToLbp.toString());
+                });
+            }
+            @Override
+            public void onFailure(Call<ExchangeRates> call, Throwable
+                    throwable) {
+            }
+        });
     }
     public void calculator() {
         String usdAmountString = usdTextField.getText().trim();
@@ -77,48 +92,5 @@ public class Rates {
             equivalentUsdRateLabel.setText(String.format("%.2f", equivalentUsd));
         }
     }
-    private void fetchRates() {
-        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
-            @Override
-            public void onResponse(Call<ExchangeRates> call,
-                                   Response<ExchangeRates> response) {
-                ExchangeRates exchangeRates = response.body();
-                Platform.runLater(() -> {
-                    buyUsdRateLabel.setText(exchangeRates.lbpToUsd.toString());
-                    sellUsdRateLabel.setText(exchangeRates.usdToLbp.toString());
-                });
-            }
-            @Override
-            public void onFailure(Call<ExchangeRates> call, Throwable
-                    throwable) {
-            }
-        });
-    }
-    public void addTransaction(ActionEvent actionEvent) {
 
-        Transaction transaction = new Transaction(
-                Float.parseFloat(usdTextField.getText()),
-                Float.parseFloat(lbpTextField.getText()),
-                ((RadioButton)
-                        transactionType.getSelectedToggle()).getText().equals("Sell USD")
-        );
-        String userToken = Authentication.getInstance().getToken();
-        String authHeader = userToken != null ? "Bearer " + userToken : null;
-        ExchangeService.exchangeApi().addTransaction(transaction,authHeader).enqueue(new Callback<Object>() {
-            @Override
-            public void onResponse(Call<Object> call, Response<Object>
-                    response) {
-                fetchRates();
-                Platform.runLater(() -> {
-                    usdTextField.setText("");
-                    lbpTextField.setText("");
-                });
-            }
-            @Override
-            public void onFailure(Call<Object> call, Throwable throwable)
-            {
-                System.out.println(throwable);
-            }
-        });
-    }
 }

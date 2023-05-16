@@ -17,4 +17,10 @@ public class ExchangeRates {
 
     @SerializedName("num_sell")
     public Float numSell;
+
+    @SerializedName("change_lbp_usd")
+    public Float lbpChange;
+
+    @SerializedName("change_usd_lbp")
+    public Float usdChange;
 }

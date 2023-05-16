@@ -1,76 +1,82 @@
 package com.kss22.exchange.platform;
 
+import com.kss22.exchange.Authentication;
+import com.kss22.exchange.api.ExchangeService;
+import com.kss22.exchange.api.model.ExchangeRates;
 import com.kss22.exchange.api.model.Transaction;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class Platform {
 
-public class Platform implements Initializable {
-    @FXML
-    public void usdToLbpClicked(ActionEvent event) {
-        fromCurrencyComboBox.setValue("USD");
-        toCurrencyComboBox.setValue("LBP");
+    public Label buyUsdRateLabel;
+    public Label sellUsdRateLabel;
+    public TextField lbpTextField;
+    public TextField usdTextField;
+    public TextField toUserIdTextField;
+
+    public ToggleGroup transactionType;
+    public Label equivalentUsdRateLabel;
+    public Label equivalentLbpRateLabel;
+
+    public void set(){
+        usdTextField.setText("");
+        lbpTextField.setText("");
     }
-    @FXML
-    public void lbpToUsdClicked(ActionEvent event) {
-        fromCurrencyComboBox.setValue("LBP");
-        toCurrencyComboBox.setValue("USD");
-    }
-
-    @FXML
-    private ComboBox<String> fromCurrencyComboBox;
-    @FXML
-    private ComboBox<String> toCurrencyComboBox;
-    @FXML
-    private TextField amountTextField;
-    @FXML
-    private Button exchangeButton;
-    @FXML
-    private TableView<Transaction> transactionTable;
-    @FXML
-    private TableColumn<Transaction, String> dateColumn;
-    @FXML
-    private TableColumn<Transaction, String> fromColumn;
-    @FXML
-    private TableColumn<Transaction, String> toColumn;
-    @FXML
-    private TableColumn<Transaction, Float> amountColumn;
-
-    private ObservableList<Transaction> transactions = FXCollections.observableArrayList();
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Set up the currency combo boxes
-        fromCurrencyComboBox.getItems().addAll("USD", "LBP");
-        fromCurrencyComboBox.getSelectionModel().selectFirst();
-        toCurrencyComboBox.getItems().addAll("USD", "LBP");
-        toCurrencyComboBox.getSelectionModel().selectLast();
-
-        // Set up the transaction table
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        fromColumn.setCellValueFactory(new PropertyValueFactory<>("fromCurrency"));
-        toColumn.setCellValueFactory(new PropertyValueFactory<>("toCurrency"));
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-        transactionTable.setItems(transactions);
+    public void initialize() {
+        fetchRates();
     }
 
-    @FXML
-    public void exchange(ActionEvent event) {
-        String fromCurrency = fromCurrencyComboBox.getValue();
-        String toCurrency = toCurrencyComboBox.getValue();
-        float amount = Float.parseFloat(amountTextField.getText());
+    private void fetchRates() {
+        ExchangeService.exchangeApi().getExchangeRates().enqueue(new Callback<ExchangeRates>() {
+            @Override
+            public void onResponse(Call<ExchangeRates> call,
+                                   Response<ExchangeRates> response) {
+                ExchangeRates exchangeRates = response.body();
+                javafx.application.Platform.runLater(() -> {
+                    buyUsdRateLabel.setText(exchangeRates.lbpToUsd.toString());
+                    sellUsdRateLabel.setText(exchangeRates.usdToLbp.toString());
+                });
+            }
+            @Override
+            public void onFailure(Call<ExchangeRates> call, Throwable
+                    throwable) {
+            }
+        });
+    }
 
-        // TODO: Implement exchange logic using API
+    public void addTransaction(ActionEvent actionEvent) {
 
-        Transaction transaction = new Transaction(100f, 10000000f, true);
-        transactions.add(transaction);
+        Transaction transaction = new Transaction(
+                Float.parseFloat(usdTextField.getText()),
+                Float.parseFloat(lbpTextField.getText()),
+                ((RadioButton)
+                        transactionType.getSelectedToggle()).getText().equals("Sell USD"),
+                Integer.parseInt(toUserIdTextField.getText())
+        );
+        String userToken = Authentication.getInstance().getToken();
+        String authHeader = userToken != null ? "Bearer " + userToken : null;
+        ExchangeService.exchangeApi().addTransaction(transaction,authHeader).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object>
+                    response) {
+                javafx.application.Platform.runLater(() -> {
+                    usdTextField.setText("");
+                    lbpTextField.setText("");
+                    toUserIdTextField.setText("");
+                });
+            }
+            @Override
+            public void onFailure(Call<Object> call, Throwable throwable)
+            {
+                System.out.println(throwable);
+            }
+        });
     }
 }

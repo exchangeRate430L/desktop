@@ -13,6 +13,9 @@
         <VBox spacing="5" styleClass="nav-container" fillWidth="true">
             <Button styleClass="nav-button" text="Exchange Rate"
                     onAction="#ratesSelected"/>
+            <Button fx:id="platformButton" styleClass="nav-button"
+                    text="Users Platform"
+                    onAction="#platformSelected"/>
             <Button fx:id="transactionButton" styleClass="nav-button"
                     text="Transactions"
                     onAction="#transactionsSelected"/>
@@ -20,17 +23,16 @@
                     text="Login" onAction="#loginSelected"/>
             <Button fx:id="registerButton" styleClass="nav-button"
                     text="Register" onAction="#registerSelected"/>
-            <Button fx:id="logoutButton" styleClass="nav-button" text="Log
-out" onAction="#logoutSelected"/>
             <Button fx:id="analyticsButton" styleClass="nav-button"
                     text="Insights"
                     onAction="#analyticsSelected"/>
             <Button fx:id="graphButton" styleClass="nav-button"
                     text="Graph"
                     onAction="#graphSelected"/>
-            <Button fx:id="platformButton" styleClass="nav-button"
-                    text="Users Platform"
-                    onAction="#platformSelected"/>
+            <Button fx:id="logoutButton" styleClass="nav-button" text="Log
+out" onAction="#logoutSelected"/>
+
+
         </VBox>
     </left>
     <center>
