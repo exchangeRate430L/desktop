@@ -47,6 +47,7 @@ public class Platform {
             @Override
             public void onFailure(Call<ExchangeRates> call, Throwable
                     throwable) {
+                System.out.println(throwable);
             }
         });
     }
