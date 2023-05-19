@@ -35,6 +35,7 @@ public class analytics {
             @Override
             public void onFailure(Call<ExchangeRates> call, Throwable
                     throwable) {
+                System.out.println(throwable);
             }
         });
     }
